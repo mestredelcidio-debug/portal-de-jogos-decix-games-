@@ -94,11 +94,22 @@ export class GamePixService {
         throw new Error(`GamePix API retornou status HTTP ${response.status}: ${response.statusText}`);
       }
 
-      const data = await response.json();
-      const rawItems = Array.isArray(data) ? data : (Array.isArray(data.data) ? data.data : (Array.isArray(data.items) ? data.items : []));
-      const total = typeof data.total === 'number' ? data.total : rawItems.length;
+      const data = (await response.json()) as Record<string, unknown> | unknown[];
+      const rawItems = Array.isArray(data)
+        ? data
+        : Array.isArray((data as Record<string, unknown>)?.data)
+        ? ((data as Record<string, unknown>).data as unknown[])
+        : Array.isArray((data as Record<string, unknown>)?.items)
+        ? ((data as Record<string, unknown>).items as unknown[])
+        : [];
+      const total =
+        !Array.isArray(data) && typeof (data as Record<string, unknown>)?.total === 'number'
+          ? ((data as Record<string, unknown>).total as number)
+          : rawItems.length;
 
-      const normalizedGames: DecixGame[] = rawItems.map((item: Record<string, unknown>) => normalizeGamePixItem(item));
+      const normalizedGames: DecixGame[] = rawItems.map((item) =>
+        normalizeGamePixItem(item as Record<string, unknown>)
+      );
 
       // Salva no cache com TTL padrão
       globalCache.set(cacheKey, { games: normalizedGames, total });
