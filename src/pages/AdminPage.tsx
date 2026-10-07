@@ -310,6 +310,14 @@ export const AdminPage: React.FC = () => {
               <option value="matematica">Matemática</option>
               <option value="memoria">Memória</option>
               <option value="tabuleiro">Tabuleiro</option>
+              <option value="estrategia">Estratégia</option>
+              <option value="arcade">Arcade</option>
+              <option value="acao">Ação</option>
+              <option value="aventura">Aventura</option>
+              <option value="corrida">Corrida</option>
+              <option value="esportes">Esportes</option>
+              <option value="casual">Casual</option>
+              <option value="multiplayer">Multiplayer</option>
             </select>
           </div>
 

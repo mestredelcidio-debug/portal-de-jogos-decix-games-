@@ -10,6 +10,7 @@ import { HomePage } from './pages/HomePage.js';
 import { CatalogPage } from './pages/CatalogPage.js';
 import { GameDetailPage } from './pages/GameDetailPage.js';
 import { CategoryPage } from './pages/CategoryPage.js';
+import { CategoriesHubPage } from './pages/CategoriesHubPage.js';
 import { SearchPage } from './pages/SearchPage.js';
 import { PopularPage } from './pages/PopularPage.js';
 import { NewGamesPage } from './pages/NewGamesPage.js';
@@ -52,9 +53,13 @@ export default function App() {
 
   // Roteador leve de alto desempenho
   const renderContent = () => {
-    // 1. Rota Individual de Jogo: /jogos/:slug
+    // 1. Rota Individual de Jogo: /jogos/:slug ou /jogo/:slug
     if (currentPath.startsWith('/jogos/')) {
       const slug = currentPath.replace('/jogos/', '').split('?')[0];
+      return <GameDetailPage slug={slug} onPlayGame={handlePlayGame} onNavigate={navigate} />;
+    }
+    if (currentPath.startsWith('/jogo/')) {
+      const slug = currentPath.replace('/jogo/', '').split('?')[0];
       return <GameDetailPage slug={slug} onPlayGame={handlePlayGame} onNavigate={navigate} />;
     }
 
@@ -77,6 +82,8 @@ export default function App() {
         return <HomePage onPlayGame={handlePlayGame} onNavigate={navigate} />;
       case '/jogos':
         return <CatalogPage onPlayGame={handlePlayGame} onNavigate={navigate} />;
+      case '/categorias':
+        return <CategoriesHubPage onPlayGame={handlePlayGame} onNavigate={navigate} />;
       case '/populares':
         return <PopularPage onPlayGame={handlePlayGame} onNavigate={navigate} />;
       case '/novos':

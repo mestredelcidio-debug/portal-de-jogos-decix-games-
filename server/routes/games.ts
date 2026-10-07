@@ -32,6 +32,29 @@ gamesRouter.get('/', (req: Request, res: Response) => {
   }
 });
 
+// GET /api/games/strategic-categories (Categorias prioritárias de campanha/divulgação)
+gamesRouter.get('/strategic-categories', (req: Request, res: Response) => {
+  try {
+    const list = gameService.getStrategicCategories();
+    res.json(list);
+  } catch (err: unknown) {
+    const msg = err instanceof Error ? err.message : 'Erro interno';
+    res.status(500).json({ error: 'Erro ao carregar categorias estratégicas', message: msg });
+  }
+});
+
+// GET /api/games/category-summary/:category (Resumo detalhado com mais jogados e novos da categoria)
+gamesRouter.get('/category-summary/:category', (req: Request, res: Response) => {
+  try {
+    const category = req.params.category;
+    const summary = gameService.getCategorySummary(category);
+    res.json(summary);
+  } catch (err: unknown) {
+    const msg = err instanceof Error ? err.message : 'Erro interno';
+    res.status(500).json({ error: 'Erro ao carregar resumo da categoria', message: msg });
+  }
+});
+
 // GET /api/games/popular
 gamesRouter.get('/popular', (req: Request, res: Response) => {
   try {

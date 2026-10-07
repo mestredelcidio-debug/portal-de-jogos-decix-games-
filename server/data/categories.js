@@ -7,7 +7,7 @@ export const INITIAL_CATEGORIES = [
         icon: 'Brain',
         color: '#06b6d4', // Cyan
         isPrimary: true,
-        count: 12
+        count: 14
     },
     {
         id: 'cat-logica',
@@ -17,7 +17,7 @@ export const INITIAL_CATEGORIES = [
         icon: 'Cpu',
         color: '#0284c7', // Sky Blue
         isPrimary: true,
-        count: 10
+        count: 12
     },
     {
         id: 'cat-palavras',
@@ -27,7 +27,7 @@ export const INITIAL_CATEGORIES = [
         icon: 'BookOpen',
         color: '#3b82f6', // Blue
         isPrimary: true,
-        count: 8
+        count: 10
     },
     {
         id: 'cat-quebra-cabeca',
@@ -37,7 +37,7 @@ export const INITIAL_CATEGORIES = [
         icon: 'Puzzle',
         color: '#6366f1', // Indigo
         isPrimary: true,
-        count: 14
+        count: 16
     },
     {
         id: 'cat-matematica',
@@ -47,7 +47,7 @@ export const INITIAL_CATEGORIES = [
         icon: 'Binary',
         color: '#10b981', // Emerald
         isPrimary: false,
-        count: 6
+        count: 8
     },
     {
         id: 'cat-memoria',
@@ -67,7 +67,7 @@ export const INITIAL_CATEGORIES = [
         icon: 'LayoutGrid',
         color: '#8b5cf6', // Violet
         isPrimary: false,
-        count: 5
+        count: 6
     },
     {
         id: 'cat-estrategia',
@@ -77,7 +77,57 @@ export const INITIAL_CATEGORIES = [
         icon: 'Compass',
         color: '#ec4899', // Pink
         isPrimary: false,
-        count: 4
+        count: 6
+    },
+    {
+        id: 'cat-arcade',
+        slug: 'arcade',
+        name: 'Arcade',
+        description: 'Clássicos ágeis de reflexo e pontuação para jogar no navegador.',
+        icon: 'Gamepad2',
+        color: '#f43f5e', // Rose
+        isPrimary: false,
+        count: 9
+    },
+    {
+        id: 'cat-acao',
+        slug: 'acao',
+        name: 'Ação',
+        description: 'Jogos dinâmicos com ritmo acelerado, movimento e reflexos rápidos.',
+        icon: 'Flame',
+        color: '#ef4444', // Red
+        isPrimary: false,
+        count: 8
+    },
+    {
+        id: 'cat-aventura',
+        slug: 'aventura',
+        name: 'Aventura',
+        description: 'Explore mundos, supere obstáculos e descubra segredos fascinantes.',
+        icon: 'MapPin',
+        color: '#d97706', // Orange
+        isPrimary: false,
+        count: 7
+    },
+    {
+        id: 'cat-corrida',
+        slug: 'corrida',
+        name: 'Corrida',
+        description: 'Velocidade, pistas desafiadoras e curvas com adrenalina.',
+        icon: 'Trophy',
+        color: '#eab308', // Yellow
+        isPrimary: false,
+        count: 5
+    },
+    {
+        id: 'cat-esportes',
+        slug: 'esportes',
+        name: 'Esportes',
+        description: 'Futebol, basquete, bilhar e simulações esportivas para todos.',
+        icon: 'Activity',
+        color: '#84cc16', // Lime
+        isPrimary: false,
+        count: 6
     },
     {
         id: 'cat-casual',
@@ -87,6 +137,16 @@ export const INITIAL_CATEGORIES = [
         icon: 'Coffee',
         color: '#14b8a6', // Teal
         isPrimary: false,
-        count: 9
+        count: 11
+    },
+    {
+        id: 'cat-multiplayer',
+        slug: 'multiplayer',
+        name: 'Multiplayer',
+        description: 'Jogue em tempo real com ou contra outros competidores.',
+        icon: 'Users',
+        color: '#06b6d4', // Cyan
+        isPrimary: false,
+        count: 4
     }
 ];

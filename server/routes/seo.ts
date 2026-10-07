@@ -19,6 +19,8 @@ Allow: /
 Allow: /ads.txt
 Allow: /jogos
 Allow: /jogos/*
+Allow: /jogo/*
+Allow: /categorias
 Allow: /categoria/*
 Allow: /populares
 Allow: /novos
@@ -56,6 +58,7 @@ seoRouter.get('/sitemap.xml', (req: Request, res: Response) => {
   const staticPages = [
     { url: '/', priority: '1.0', changefreq: 'daily' },
     { url: '/jogos', priority: '0.9', changefreq: 'daily' },
+    { url: '/categorias', priority: '0.9', changefreq: 'daily' },
     { url: '/destaques', priority: '0.8', changefreq: 'daily' },
     { url: '/populares', priority: '0.8', changefreq: 'daily' },
     { url: '/novos', priority: '0.8', changefreq: 'daily' },

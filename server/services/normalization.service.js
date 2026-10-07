@@ -151,10 +151,28 @@ function mapToDecixCategorySlug(raw) {
     if (lower.includes('strateg') || lower.includes('estrateg')) {
         return 'estrategia';
     }
-    if (lower.includes('action') || lower.includes('acao') || lower.includes('arcade')) {
+    if (lower.includes('race') || lower.includes('corrid') || lower.includes('car') || lower.includes('drive')) {
+        return 'corrida';
+    }
+    if (lower.includes('sport') || lower.includes('esport') || lower.includes('foot') || lower.includes('socc') || lower.includes('basket')) {
+        return 'esportes';
+    }
+    if (lower.includes('advent') || lower.includes('aventur') || lower.includes('quest') || lower.includes('rpg')) {
+        return 'aventura';
+    }
+    if (lower.includes('act') || lower.includes('acao') || lower.includes('fight') || lower.includes('shoot')) {
+        return 'acao';
+    }
+    if (lower.includes('multi') || lower.includes('pvp') || lower.includes('io') || lower.includes('online')) {
+        return 'multiplayer';
+    }
+    if (lower.includes('arcade') || lower.includes('retro') || lower.includes('pinball')) {
         return 'arcade';
     }
-    return 'raciocinio';
+    if (lower.includes('casual') || lower.includes('relax') || lower.includes('clicker')) {
+        return 'casual';
+    }
+    return createSlug(raw) || 'raciocinio';
 }
 function getDecixCategoryDisplayName(slug, fallback) {
     const map = {
@@ -167,7 +185,12 @@ function getDecixCategoryDisplayName(slug, fallback) {
         'tabuleiro': 'Tabuleiro',
         'estrategia': 'Estratégia',
         'arcade': 'Arcade',
-        'casual': 'Casual'
+        'acao': 'Ação',
+        'aventura': 'Aventura',
+        'corrida': 'Corrida',
+        'esportes': 'Esportes',
+        'casual': 'Casual',
+        'multiplayer': 'Multiplayer'
     };
-    return map[slug] || fallback;
+    return map[slug] || fallback || slug;
 }

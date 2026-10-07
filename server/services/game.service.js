@@ -5,12 +5,14 @@
  */
 import { INITIAL_GAMES } from '../data/initialGames.js';
 import { INITIAL_CATEGORIES } from '../data/categories.js';
+import { INITIAL_STRATEGIC_CATEGORIES } from '../data/campaignCategories.js';
 import { globalCache } from './cache.service.js';
 import { gamePixService } from './gamepix.service.js';
 import { createSlug } from './normalization.service.js';
 export class GameService {
     games = [...INITIAL_GAMES];
     categories = [...INITIAL_CATEGORIES];
+    strategicCategories = [...INITIAL_STRATEGIC_CATEGORIES];
     constructor() {
         this.refreshCategoryCounts();
     }
@@ -24,6 +26,50 @@ export class GameService {
             ...cat,
             count: counts.get(cat.slug) || 0
         }));
+    }
+    /**
+     * Retorna as categorias estratégicas configuradas para campanhas de divulgação.
+     */
+    getStrategicCategories() {
+        return this.strategicCategories
+            .filter((c) => c.active)
+            .sort((a, b) => a.priority - b.priority);
+    }
+    /**
+     * Atualiza ou adiciona configuração de categoria estratégica.
+     */
+    updateStrategicCategory(config) {
+        const idx = this.strategicCategories.findIndex((c) => c.slug === config.slug);
+        if (idx >= 0) {
+            this.strategicCategories[idx] = config;
+        }
+        else {
+            this.strategicCategories.push(config);
+        }
+    }
+    /**
+     * Retorna resumo detalhado de uma categoria (metadados, contagem, mais jogados e novos).
+     */
+    getCategorySummary(slug) {
+        const catSlug = slug.toLowerCase();
+        const category = this.categories.find((c) => c.slug === catSlug || c.slug === createSlug(catSlug));
+        const allInCat = this.games.filter((g) => g.categorySlug.toLowerCase() === catSlug || g.category.toLowerCase() === catSlug);
+        const popular = [...allInCat].sort((a, b) => b.popularity - a.popularity).slice(0, 4);
+        const newest = [...allInCat].sort((a, b) => new Date(b.releaseDate).getTime() - new Date(a.releaseDate).getTime()).slice(0, 4);
+        return {
+            category: category || {
+                id: 'cat-' + catSlug,
+                slug: catSlug,
+                name: catSlug.charAt(0).toUpperCase() + catSlug.slice(1),
+                description: `Jogos da categoria ${catSlug} na DECIX GAMES.`,
+                icon: 'Gamepad2',
+                color: '#06b6d4',
+                count: allInCat.length
+            },
+            total: allInCat.length,
+            popular,
+            newest
+        };
     }
     /**
      * Retorna jogos filtrados com suporte a paginação e cache.

@@ -24,7 +24,7 @@ export const Header: React.FC<HeaderProps> = ({ currentPath, onNavigate, onOpenS
 
   const navItems = [
     { label: 'Jogos', path: '/jogos' },
-    { label: 'Categorias', path: '/jogos#categorias' },
+    { label: 'Categorias', path: '/categorias' },
     { label: 'Novos', path: '/novos' },
     { label: 'Populares', path: '/populares' },
     { label: 'Destaques', path: '/destaques' },

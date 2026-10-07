@@ -126,6 +126,102 @@ export const api = {
   },
 
   /**
+   * Busca categorias estratégicas de divulgação/aquisição
+   */
+  async getStrategicCategories() {
+    try {
+      const res = await fetch(`${API_BASE}/games/strategic-categories`);
+      if (!res.ok) throw new Error(`Status ${res.status}`);
+      return await res.json();
+    } catch {
+      return [
+        {
+          slug: 'raciocinio',
+          categoryName: 'Raciocínio & Inteligência',
+          campaignTitle: 'Treine Sua Mente Diariamente',
+          tagline: 'Desafios cognitivos projetados para estimular o raciocínio rápido',
+          badgeText: 'Foco Principal',
+          description: 'Enigmas, quebra-cabeças e testes de agilidade mental para exercitar o cérebro.',
+          priority: 1,
+          active: true,
+          accentColor: '#06b6d4'
+        },
+        {
+          slug: 'palavras',
+          categoryName: 'Palavras & Vocabulário',
+          campaignTitle: 'Desafios de Letras e Palavras Cruzadas',
+          tagline: 'Caça-palavras, anagramas e palavras cruzadas inteligentes',
+          badgeText: 'Mais Buscados',
+          description: 'Expanda seu vocabulário resolvendo grades de palavras e jogos de letras diários.',
+          priority: 2,
+          active: true,
+          accentColor: '#3b82f6'
+        },
+        {
+          slug: 'logica',
+          categoryName: 'Lógica & Dedução',
+          campaignTitle: 'Padrões, Números e Sudoku',
+          tagline: 'Desvende sequências numéricas e problemas de dedução',
+          badgeText: 'Alta Concentração',
+          description: 'Jogos matemáticos e sudokus calibrados para raciocínio analítico.',
+          priority: 3,
+          active: true,
+          accentColor: '#0284c7'
+        },
+        {
+          slug: 'quebra-cabeca',
+          categoryName: 'Quebra-Cabeça & Puzzles',
+          campaignTitle: 'Encaixes e Desafios Espaciais',
+          tagline: 'Tangrams, blocos deslizantes e quebra-cabeças visuais',
+          badgeText: 'Visual & Espacial',
+          description: 'Exercite sua percepção geométrica com blocos e encaixes instigantes.',
+          priority: 4,
+          active: true,
+          accentColor: '#6366f1'
+        },
+        {
+          slug: 'tabuleiro',
+          categoryName: 'Tabuleiro & Estratégia Tática',
+          campaignTitle: 'Grandes Clássicos da Mente',
+          tagline: 'Xadrez, damas e estratégia para planejar jogadas',
+          badgeText: 'Clássicos',
+          description: 'Aperfeiçoe suas táticas e previsão de lances em partidas rápidas.',
+          priority: 5,
+          active: true,
+          accentColor: '#8b5cf6'
+        }
+      ];
+    }
+  },
+
+  /**
+   * Busca resumo e destaques de uma categoria
+   */
+  async getCategorySummary(slug: string) {
+    try {
+      const res = await fetch(`${API_BASE}/games/category-summary/${slug}`);
+      if (!res.ok) throw new Error(`Status ${res.status}`);
+      return await res.json();
+    } catch {
+      const catGames = INITIAL_GAMES.filter((g) => g.categorySlug === slug);
+      return {
+        category: INITIAL_CATEGORIES.find((c) => c.slug === slug) || {
+          id: 'cat-' + slug,
+          slug,
+          name: slug,
+          description: `Jogos de ${slug}`,
+          icon: 'Gamepad2',
+          color: '#06b6d4',
+          count: catGames.length
+        },
+        total: catGames.length,
+        popular: catGames.slice(0, 4),
+        newest: catGames.slice(0, 4)
+      };
+    }
+  },
+
+  /**
    * Pesquisa textual global
    */
   async searchGames(query: string, page = 1, limit = 24, sortBy?: string): Promise<GameListResponse> {

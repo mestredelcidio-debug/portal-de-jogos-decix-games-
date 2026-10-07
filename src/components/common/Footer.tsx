@@ -35,7 +35,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
                 </button>
               </li>
               <li>
-                <button onClick={() => onNavigate('/jogos#categorias')} className="hover:text-cyan-400 transition-colors">
+                <button onClick={() => onNavigate('/categorias')} className="hover:text-cyan-400 transition-colors">
                   Todas as Categorias
                 </button>
               </li>

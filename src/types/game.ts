@@ -56,6 +56,20 @@ export interface GameCategory {
   count?: number;
 }
 
+export interface StrategicCategoryConfig {
+  slug: string;
+  categoryName: string;
+  campaignTitle: string;
+  tagline: string;
+  badgeText?: string;
+  description: string;
+  priority: number; // 1 = highest
+  active: boolean;
+  bannerUrl?: string;
+  accentColor?: string;
+  featuredGameSlugs?: string[];
+}
+
 export interface GameListResponse {
   games: DecixGame[];
   total: number;
