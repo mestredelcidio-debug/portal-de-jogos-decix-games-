@@ -4,6 +4,8 @@
  */
 
 import { Router, Request, Response } from 'express';
+import fs from 'fs';
+import path from 'path';
 import { gameService } from '../services/game.service.js';
 
 export const seoRouter = Router();
@@ -14,6 +16,7 @@ seoRouter.get('/robots.txt', (req: Request, res: Response) => {
   const content = `# DECIX GAMES – Robots Directive
 User-agent: *
 Allow: /
+Allow: /ads.txt
 Allow: /jogos
 Allow: /jogos/*
 Allow: /categoria/*
@@ -27,8 +30,22 @@ Disallow: /api/admin/
 
 Sitemap: ${baseUrl}/sitemap.xml
 `;
-  res.header('Content-Type', 'text/plain');
+  res.header('Content-Type', 'text/plain; charset=utf-8');
   res.send(content);
+});
+
+// GET /ads.txt (garante entrega física direta como text/plain sem renderização SPA)
+seoRouter.get('/ads.txt', (req: Request, res: Response) => {
+  const adsPath = path.resolve(process.cwd(), 'public', 'ads.txt');
+  const distAdsPath = path.resolve(process.cwd(), 'dist', 'ads.txt');
+  const targetPath = fs.existsSync(distAdsPath) ? distAdsPath : adsPath;
+
+  if (fs.existsSync(targetPath)) {
+    res.header('Content-Type', 'text/plain; charset=utf-8');
+    res.sendFile(targetPath);
+  } else {
+    res.status(404).header('Content-Type', 'text/plain; charset=utf-8').send('ads.txt não encontrado.');
+  }
 });
 
 // GET /sitemap.xml
