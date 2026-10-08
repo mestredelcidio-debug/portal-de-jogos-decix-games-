@@ -24,13 +24,60 @@ import { NotFoundPage } from './pages/NotFoundPage.js';
 import { DecixGame } from './types/game.js';
 import { analytics } from './services/analytics.js';
 
+const KNOWN_ROUTES = [
+  'jogos',
+  'jogo',
+  'categoria',
+  'categorias',
+  'pesquisa',
+  'populares',
+  'novos',
+  'destaques',
+  'favoritos',
+  'sobre',
+  'politica-de-privacidade',
+  'termos',
+  'admin'
+];
+
+/**
+ * Normaliza o path eliminando prefixos de subpastas do GitHub Pages (ex: /decix-games/)
+ */
+function getNormalizedPath(): string {
+  if (typeof window === 'undefined') return '/';
+
+  // 1. Suporte a hash fallback (ex: /#/jogos/x)
+  if (window.location.hash && window.location.hash.startsWith('#/')) {
+    return window.location.hash.slice(1);
+  }
+
+  // 2. Suporte a query redirect SPA de 404 (ex: /?p=/jogos/x)
+  const searchParams = new URLSearchParams(window.location.search);
+  const p = searchParams.get('p');
+  if (p) return p;
+
+  const raw = window.location.pathname || '/';
+  if (raw === '/') return '/';
+
+  const segments = raw.split('/').filter(Boolean);
+  if (segments.length === 0) return '/';
+
+  // Se o primeiro segmento NÃO for uma rota conhecida do DECIX GAMES, trata como subpasta do repo (GitHub Pages)
+  if (!KNOWN_ROUTES.includes(segments[0])) {
+    const subRoute = '/' + segments.slice(1).join('/');
+    return subRoute === '/' ? '/' : subRoute;
+  }
+
+  return raw;
+}
+
 export default function App() {
-  const [currentPath, setCurrentPath] = useState<string>(() => window.location.pathname || '/');
+  const [currentPath, setCurrentPath] = useState<string>(getNormalizedPath);
 
   // Sincroniza navegação com o histórico do navegador (popstate)
   useEffect(() => {
     const handlePopState = () => {
-      setCurrentPath(window.location.pathname || '/');
+      setCurrentPath(getNormalizedPath());
     };
     window.addEventListener('popstate', handlePopState);
     return () => window.removeEventListener('popstate', handlePopState);
@@ -43,7 +90,16 @@ export default function App() {
   }, [currentPath]);
 
   const navigate = (path: string) => {
-    window.history.pushState({}, '', path);
+    if (typeof window !== 'undefined') {
+      const raw = window.location.pathname || '/';
+      const segments = raw.split('/').filter(Boolean);
+      let prefix = '';
+      if (segments.length > 0 && !KNOWN_ROUTES.includes(segments[0])) {
+        prefix = '/' + segments[0];
+      }
+      const fullTarget = `${prefix}${path}`;
+      window.history.pushState({}, '', fullTarget);
+    }
     setCurrentPath(path.split('?')[0]);
   };
 

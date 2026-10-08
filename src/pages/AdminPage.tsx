@@ -125,14 +125,17 @@ export const AdminPage: React.FC = () => {
             <KeyRound className="w-6 h-6" />
           </div>
           <h1 className="font-display font-bold text-2xl text-white">Acesso Administrativo</h1>
-          <p className="text-xs text-slate-400 mt-1 mb-6">
-            Insira o segredo de administrador configurado no backend (ADMIN_SECRET).
+          <p className="text-xs text-slate-400 mt-1 mb-2">
+            Modo Estático GitHub Pages: Digite qualquer senha para acessar o painel de gerenciamento local.
           </p>
+          <div className="inline-block px-2.5 py-1 mb-4 rounded-full bg-cyan-950/60 border border-cyan-800/60 text-[11px] font-medium text-cyan-300">
+            ✓ Persistência local via LocalStorage
+          </div>
 
           <form onSubmit={handleLogin} className="space-y-4">
             <input
               type="password"
-              placeholder="Digite o segredo administrativo..."
+              placeholder="Digite o segredo ou senha..."
               value={secret}
               onChange={(e) => setSecret(e.target.value)}
               className="w-full px-4 py-2.5 bg-gray-950 border border-slate-800 rounded-xl text-slate-100 text-sm focus:outline-none focus:border-cyan-500"
@@ -185,6 +188,19 @@ export const AdminPage: React.FC = () => {
             Sair
           </button>
         </div>
+      </div>
+
+      {/* BANNER INFORMATIVO GITHUB PAGES */}
+      <div className="bg-cyan-950/40 border border-cyan-800/60 rounded-2xl p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs">
+        <div className="flex items-center gap-3">
+          <div className="w-2.5 h-2.5 rounded-full bg-cyan-400 animate-pulse shrink-0" />
+          <p className="text-cyan-200">
+            <strong className="text-white">Hospedagem Estática GitHub Pages Ativa:</strong> Todas as alterações (jogos adicionados, novos destaques e estatísticas de jogadas) são processadas instantaneamente no cliente e persistidas com segurança no LocalStorage do navegador.
+          </p>
+        </div>
+        <span className="shrink-0 px-2.5 py-1 bg-cyan-900/50 text-cyan-300 font-mono rounded-lg border border-cyan-700/50">
+          Client-Side Mode
+        </span>
       </div>
 
       {/* STATS OVERVIEW CARDS */}
